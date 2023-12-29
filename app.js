@@ -9,7 +9,7 @@
 
 const taskInput = document.getElementById("new-task");
 const addButton = document.getElementsByTagName("button")[0];
-const incompleteTaskHolder = document.getElementById("incompleteTasks");
+const incompleteTaskHolder = document.getElementById("incomplete-tasks");
 const completedTasksHolder = document.getElementById("completed-tasks");
 
 const createNewTaskElement = function (taskString) {
@@ -21,17 +21,21 @@ const createNewTaskElement = function (taskString) {
   const deleteButton = document.createElement("button");
   const deleteButtonImg = document.createElement("img");
 
+  listItem.className = "task__item";
   label.innerText = taskString;
-  label.className = "task";
+  label.className = "label task";
 
   checkBox.type = "checkbox";
+  checkBox.className = "input input__checkbox";
   editInput.type = "text";
-  editInput.className = "task";
+  editInput.className = "input input__text task";
 
   editButton.innerText = "Edit";
-  editButton.className = "edit";
-  deleteButton.className = "delete";
+  editButton.className = "button button__edit";
+  deleteButton.className = "button button__delete";
+  deleteButtonImg.className = "image__remove";
   deleteButtonImg.src = "./remove.svg";
+  deleteButtonImg.alt = "remove";
   deleteButton.appendChild(deleteButtonImg);
 
   listItem.appendChild(checkBox);
@@ -58,10 +62,10 @@ const addTask = function () {
 const editTask = function () {
   // Change 'edit' to 'save'");
   const listItem = this.parentNode;
-  const editInput = listItem.querySelector("input[type=text]");
-  const label = listItem.querySelector("label");
-  const editBtn = listItem.querySelector(".edit");
-  const containsClass = listItem.classList.contains("editMode");
+  const editInput = listItem.querySelector(".input__text");
+  const label = listItem.querySelector(".label");
+  const editBtn = listItem.querySelector(".button__edit");
+  const containsClass = listItem.classList.contains("edit-mode");
 
   if (containsClass) {
     label.innerText = editInput.value;
@@ -70,7 +74,7 @@ const editTask = function () {
     editInput.value = label.innerText;
     editBtn.innerText = "Save";
   }
-  listItem.classList.toggle("editMode");
+  listItem.classList.toggle("edit-mode");
 };
 
 const deleteTask = function () {
@@ -99,9 +103,9 @@ addButton.onclick = addTask;
 addButton.addEventListener("click", addTask);
 
 const bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
-  const checkBox = taskListItem.querySelector("input[type=checkbox]");
-  const editButton = taskListItem.querySelector("button.edit");
-  const deleteButton = taskListItem.querySelector("button.delete");
+  const checkBox = taskListItem.querySelector(".input__checkbox");
+  const editButton = taskListItem.querySelector(".button__edit");
+  const deleteButton = taskListItem.querySelector(".button__delete");
 
   editButton.onclick = editTask;
   deleteButton.onclick = deleteTask;
